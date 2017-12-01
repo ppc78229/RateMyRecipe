@@ -76,6 +76,7 @@ public class RecipeServlet extends HttpServlet {
 		} else if(request.getParameter("vote") != null) { // user vote
 			handleVote(request);
 		}
+		pl.closeConnection();
 		runTemplate(request,response);
 	}
 
