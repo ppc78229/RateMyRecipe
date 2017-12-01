@@ -120,6 +120,7 @@ public class RecipeServlet extends HttpServlet {
 			User user = pl.getUser(username);
 			int userID = user.getID();
 			root.put("userID", userID);
+			root.put("username", username);
 			templateName = "dashboard.ftl";
 		} else { // login failed
 			templateName = "index.ftl";
@@ -128,13 +129,13 @@ public class RecipeServlet extends HttpServlet {
 
 	private void handleDashboard(HttpServletRequest request) {
 		String option = request.getParameter("dashboard");
-		if(option.equals("Dashboard")) {
+		if(option.equals("Dashboard")) { // clicked on Dashboard
 			prepareDashboard(request);
-		} else if(option.equals("Profile")) {
+		} else if(option.equals("Profile")) { // clicked on Profile
 			prepareProfile(request);
-		} else if(option.equals("Upload")) {
+		} else if(option.equals("Upload")) { // clicked on Upload
 			prepareUpload(request);
-		} else {
+		} else { // clicked on recipe category
 			prepareRecipeList(request, option);
 		}
 	}
@@ -144,6 +145,7 @@ public class RecipeServlet extends HttpServlet {
 		String recipeDescr = request.getParameter("recipeDescription");
 		String category = request.getParameter("category");
 		int userID = Integer.parseInt(request.getParameter("userID"));
+		String username = request.getParameter("username");
 		int catID = 0;
 		List<Category> cats = pl.getCategories();
 		for(Category cat : cats) {
@@ -159,32 +161,61 @@ public class RecipeServlet extends HttpServlet {
 			steps.add(step);
 		}
 		pl.addSteps(steps, recipeID);
+		String message = "Recipe uploaded successfully";
 		root.put("userID", userID);
+		root.put("username", username);
+		root.put("message", message);
 		templateName = "dashboard.ftl";
 	}
 	
 	private void handleVote(HttpServletRequest request) {
-		
+		int userID = Integer.parseInt(request.getParameter("userID"));
+		String username = request.getParameter("username");
+		int recipeID = Integer.parseInt(request.getParameter("recipeID"));
+		String voteBtn = request.getParameter("vote");
+		int vote;
+		if(voteBtn.charAt(0) == 'v') vote = -1;
+		else vote = 1;
+		if(pl.checkVote(userID, recipeID)) { // vote valid
+			pl.addVote(userID, recipeID, vote);
+			Recipe recipe = pl.getRecipe(recipeID);
+			List<Step> steps = pl.getSteps(recipeID);
+			root.put("recipe", recipe);
+			root.put("steps", steps);
+			templateName = "recipePage.ftl";
+		} else { // vote invalid, already voted for this recipe
+			String message = "Vote failed: you have already voted for that recipe";
+			root.put("message", message);
+			templateName = "dashboard.ftl";
+		}
+		root.put("userID", userID);
+		root.put("username", username);
 	}
 	
 	private void prepareDashboard(HttpServletRequest request) {
 		int userID = Integer.parseInt(request.getParameter("userID"));
+		String username = request.getParameter("username");
 		root.put("userID", userID);
+		root.put("username", username);
 		templateName = "dashboard.ftl";
 	}
 	
 	private void prepareProfile(HttpServletRequest request) {
 		int userID = Integer.parseInt(request.getParameter("userID"));
+		String username = request.getParameter("username");
 		User user = pl.getUser(userID);
 		List<Recipe> recipes= pl.getRecipesByUser(userID);
 		root.put("userID", userID);
+		root.put("username", username);
 		root.put("user", user);
 		root.put("recipes", recipes);
 		templateName = "profile.ftl";
 	}
 	
 	private void prepareUpload(HttpServletRequest request) {
+		String username = request.getParameter("username");
 		root.put("userID", Integer.parseInt(request.getParameter("userID")));
+		root.put("username", username);
 		templateName = "upload.ftl";
 	}
 	
@@ -198,16 +229,20 @@ public class RecipeServlet extends HttpServlet {
 			}
 		}
 		List<Recipe> recipes = pl.getRecipesByCat(catID);
+		String username = request.getParameter("username");
 		root.put("userID", request.getParameter("userID"));
+		root.put("username", username);
 		root.put("recipes", recipes);
 		templateName = "recipelist.ftl";
 	}
 	
 	private void prepareRecipePage(HttpServletRequest request) {
 		int recipeID = Integer.parseInt(request.getParameter("recipe"));
+		String username = request.getParameter("username");
 		Recipe recipe = pl.getRecipe(recipeID);
 		List<Step> steps = pl.getSteps(recipeID);
 		root.put("userID", request.getParameter("userID"));
+		root.put("username", username);
 		root.put("recipe", recipe);
 		root.put("steps", steps);
 		templateName = "recipePage.ftl";
