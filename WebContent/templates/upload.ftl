@@ -29,6 +29,9 @@
           <li class="nav-item">
                 	 <a href="index.html"><input type=submit value = "Logout"></a>
              </li>
+          <li class="nav-item">
+          	<span class="navbar-brand">&nbsp&nbspUser: ${username}</span>
+          </li>
         </ul>
       </div>
     </nav>
@@ -38,6 +41,7 @@
           <ul class="nav nav-pills flex-column">
             <form action='RecipeServlet' method='post'>
           	<input type="hidden" name="userID" value="${userID}"/>
+          	<input type="hidden" name="username" value="${username}"/>
             <li class="nav-item">
               	<input class="nav-link" type="submit" name="dashboard" value="Dashboard"/>
             </li>
@@ -64,7 +68,7 @@
           <h1>Upload</h1>
           <form id="upload" method="post" action="RecipeServlet">  
           	<input type="hidden" name="userID" value="${userID}"/>
-          	<input type="hidden" id="numSteps" name="numSteps" value="1"/>
+          	<input type="hidden" name="username" value="${username}"/>
           <section class="row text-center placeholders">
             <div class="col-lg-6">
             <h2>Recipe Name:</h2><textarea cols="50" rows="1" name="recipeName"></textarea>

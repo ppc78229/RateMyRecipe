@@ -29,6 +29,9 @@
           <li class="nav-item">
                 	 <a href="index.html"><input type=submit value = "Logout"></a>
              </li>
+          <li class="nav-item">
+          	<span class="navbar-brand">&nbsp&nbspUser: ${username}</span>
+          </li>   
         </ul>
       </div>
     </nav>
@@ -38,8 +41,9 @@
           <ul class="nav nav-pills flex-column">
             <form action='RecipeServlet' method='post'>
           	<input type="hidden" name="userID" value="${userID}"/>
+          	<input type="hidden" name="username" value="${username}"/>
             <li class="nav-item">
-              	<input id="bootstrap-override" class="nav-link" type="submit" name="dashboard" value="Dashboard"/>
+              	<input class="nav-link" type="submit" name="dashboard" value="Dashboard"/>
             </li>
             <li class="nav-item">
               <input class="nav-link" type="submit" name="dashboard" value="Profile"/>
@@ -64,6 +68,8 @@
           <h1>${recipe.recipeName}</h1>
           	<form action="RecipeServlet" method="post">
           		<input type="hidden" name="userID" value="${userID}"/>
+          		<input type="hidden" name="username" value="${username}"/>
+          		<input type="hidden" name="recipeID" value="${recipe.ID?string}"/>
 	            <input type=submit name="vote" value = "^ Upvote">
 	            <br>
 	            <br>
