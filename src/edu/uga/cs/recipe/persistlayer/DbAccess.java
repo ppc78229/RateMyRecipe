@@ -10,8 +10,8 @@ public class DbAccess {
 	
 	static final String DRIVE_NAME = "com.mysql.jdbc.Driver";
 	static final String CONNECTION_URL = "jdbc:mysql://localhost:3306/recipe?useSSL=false";
-	static final String DB_CONNECTION_USERNAME = "root";
-	static final String DB_CONNECTION_PASSWORD = "notvnoradio";
+	static final String DB_CONNECTION_USERNAME = "root"; // set to your MySQL user
+	static final String DB_CONNECTION_PASSWORD = "root"; // set to password for your user
 	
 	/**
 	 * Opens a new connection to the database.
