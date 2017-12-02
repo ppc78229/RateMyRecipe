@@ -72,8 +72,6 @@
             <h2>
             	<#if message??>
             		${message}
-            	<#else>
-            		Welcome to the world's first recipe website where recipes appear in a ranked system.
             	</#if>
             </h2>
             </div>
@@ -86,10 +84,10 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script "text/javascript" src="js/jquery-3.2.1.min.js"><\/script>')</script>
-    <script "text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-    <script "text/javascript" src="js/bootstrap.min.js"></script>
+    <script>window.jQuery || document.write('<script type="text/javascript" src="js/jquery-3.2.1.min.js"><\/script>')</script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script "text/javascript" src="js/ie10-viewport-bug-workaround.js"></script>
+    <script type="text/javascript" src="js/ie10-viewport-bug-workaround.js"></script>
   </body>
 </html>

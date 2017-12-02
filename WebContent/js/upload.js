@@ -3,7 +3,7 @@ var numSteps = 1;
 $(document).ready(function(){
     $("#addStep").click(function() {
 		numSteps++;
-        var textArea = '<textarea cols="40" rows="6" name="step" placeholder="Type instruction here"></textarea>';
+        var textArea = '<textarea cols="40" rows="6" name="step" placeholder="Type instruction here" required></textarea>';
         $("#steps").append("<div><h2>Step " + numSteps + ":</h2>" + textArea + "</div>");
     });
 	
