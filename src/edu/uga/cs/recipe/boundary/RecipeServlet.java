@@ -109,14 +109,11 @@ public class RecipeServlet extends HttpServlet {
 		String fname = request.getParameter("first_name");
 		String lname = request.getParameter("last_name");
 		String password = request.getParameter("password");
-		if(username.isEmpty() || fname.isEmpty() || lname.isEmpty() || password.isEmpty()) {
-			String message = "One or more fields blank";
-			root.put("message", message);
-			templateName = "register.ftl";
-			return;
-		}
 		if(pl.checkUsername(username)) { // username available\
 			pl.addUser(fname, lname, username, password);
+			String message = "Register successful";
+			if(root.containsKey("message")) root.remove("message");
+			root.put("message", message);
 			templateName = "index.ftl";
 		} else { // username in use
 			String message = "Username already in use";
@@ -169,24 +166,10 @@ public class RecipeServlet extends HttpServlet {
 		int userID = Integer.parseInt(request.getParameter("userID"));
 		String username = request.getParameter("username");
 		
-
 		List<String> steps = new ArrayList<String>();
 		String[] stepArray = request.getParameterValues("step");
-		boolean empty = false;
 		for(String step : stepArray) {
-			if(step.isEmpty()) {
-				empty = true;
-				break;
-			}
 			steps.add(step);
-		}
-		if(empty || recipeName.isEmpty() || recipeDescr.isEmpty() || category.isEmpty()) {
-			String message = "One or more fields blank";
-			root.put("userID", userID);
-			root.put("username", username);
-			root.put("message", message);
-			templateName = "upload.ftl";
-			return;
 		}
 		
 		int catID = 0;

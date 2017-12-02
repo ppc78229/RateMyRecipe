@@ -30,9 +30,9 @@
             <div class="container">
             	<form action='RecipeServlet' method='post'>
            	 		<label><b>Username</b></label>
-               		<input class="cred" type="text" placeholder="Enter Username" name="username">
+               		<input class="cred" type="text" placeholder="Enter Username" name="username" required>
                		<label><b>Password</b></label>
-               		<input class="cred" type="password" placeholder="Enter Password" name="password" >
+               		<input class="cred" type="password" placeholder="Enter Password" name="password" required>
                		<input class="options" type="submit" name="login" value="User Login"/>
                	</form>
             </div>
