@@ -71,9 +71,9 @@
           	<input type="hidden" name="username" value="${username}"/>
           <section class="row text-center placeholders">
             <div class="col-lg-6">
-            <h2>Recipe Name:</h2><textarea cols="50" rows="1" name="recipeName"></textarea>
+            <h2>Recipe Name:</h2><textarea cols="50" rows="1" name="recipeName" required="required"></textarea>
             <br>
-            <h2>Recipe Description:</h2><textarea cols="40" rows="6" name="recipeDescription"></textarea>  
+            <h2>Recipe Description:</h2><textarea cols="40" rows="6" name="recipeDescription" required></textarea>  
             <br>
             <h2>Category:</h2>
             <select name="category">
@@ -84,7 +84,7 @@
             <br>
             <br>
             <div id="steps">
-	            <h2>Step 1:</h2><textarea cols="40" rows="6" name="step" placeholder="Type instruction here"></textarea>
+	            <h2>Step 1:</h2><textarea cols="40" rows="6" name="step" placeholder="Type instruction here" required></textarea>
             </div>
             <br>
             <button type="button" id="addStep">Add Step</button>
@@ -102,7 +102,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-    <script>window.jQuery || document.write('<script "text/javascript" src="js/jquery-3.2.1.min.js"><\/script>')</script>
+    <script>window.jQuery || document.write('<script type="text/javascript" src="js/jquery-3.2.1.min.js"><\/script>')</script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
     <script type="text/javascript" src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>

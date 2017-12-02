@@ -109,20 +109,42 @@ public class RecipeServlet extends HttpServlet {
 		String fname = request.getParameter("first_name");
 		String lname = request.getParameter("last_name");
 		String password = request.getParameter("password");
-		pl.addUser(fname, lname, username, password);
-		templateName = "index.ftl";
+		if(username.isEmpty() || fname.isEmpty() || lname.isEmpty() || password.isEmpty()) {
+			String message = "One or more fields blank";
+			root.put("message", message);
+			templateName = "register.ftl";
+			return;
+		}
+		if(pl.checkUsername(username)) { // username available\
+			pl.addUser(fname, lname, username, password);
+			templateName = "index.ftl";
+		} else { // username in use
+			String message = "Username already in use";
+			root.put("message", message);
+			templateName = "register.ftl";
+		}
 	}
 	
 	private void handleLogin(HttpServletRequest request) {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		if(pl.checkPassword(username, password)) { // login success
+		if(username.isEmpty() || password.isEmpty()) {
+			String message = "Invalid username or password";
+			root.put("message", message);
+			templateName = "index.ftl";
+			return;
+		}
+		if(!pl.checkUsername(username) && pl.checkPassword(username, password)) { // login success
 			User user = pl.getUser(username);
 			int userID = user.getID();
+			String message = "Welcome to the world's first recipe website where recipes appear in a ranked system.";
 			root.put("userID", userID);
 			root.put("username", username);
+			root.put("message", message);
 			templateName = "dashboard.ftl";
 		} else { // login failed
+			String message = "Invalid username or password";
+			root.put("message", message);
 			templateName = "index.ftl";
 		}
 	}
@@ -146,6 +168,27 @@ public class RecipeServlet extends HttpServlet {
 		String category = request.getParameter("category");
 		int userID = Integer.parseInt(request.getParameter("userID"));
 		String username = request.getParameter("username");
+		
+
+		List<String> steps = new ArrayList<String>();
+		String[] stepArray = request.getParameterValues("step");
+		boolean empty = false;
+		for(String step : stepArray) {
+			if(step.isEmpty()) {
+				empty = true;
+				break;
+			}
+			steps.add(step);
+		}
+		if(empty || recipeName.isEmpty() || recipeDescr.isEmpty() || category.isEmpty()) {
+			String message = "One or more fields blank";
+			root.put("userID", userID);
+			root.put("username", username);
+			root.put("message", message);
+			templateName = "upload.ftl";
+			return;
+		}
+		
 		int catID = 0;
 		List<Category> cats = pl.getCategories();
 		for(Category cat : cats) {
@@ -155,11 +198,6 @@ public class RecipeServlet extends HttpServlet {
 			}
 		}
 		int recipeID = pl.addRecipe(recipeName, recipeDescr, userID, catID);
-		List<String> steps = new ArrayList<String>();
-		String[] stepArray = request.getParameterValues("step");
-		for(String step : stepArray) {
-			steps.add(step);
-		}
 		pl.addSteps(steps, recipeID);
 		String message = "Recipe uploaded successfully";
 		root.put("userID", userID);
@@ -195,8 +233,10 @@ public class RecipeServlet extends HttpServlet {
 	private void prepareDashboard(HttpServletRequest request) {
 		int userID = Integer.parseInt(request.getParameter("userID"));
 		String username = request.getParameter("username");
+		String message = "Welcome to the world's first recipe website where recipes appear in a ranked system.";
 		root.put("userID", userID);
 		root.put("username", username);
+		root.put("message", message);
 		templateName = "dashboard.ftl";
 	}
 	

@@ -39,6 +39,7 @@ public class PersistenceLayer {
 			int count = 0;
 			while(rs.next()) {
 				count = rs.getInt(1);
+				break;
 			}
 			if(count > 0) return false;
 			else return true;
