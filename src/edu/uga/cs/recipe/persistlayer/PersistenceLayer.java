@@ -4,8 +4,12 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 import edu.uga.cs.recipe.objectlayer.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.lang.StringBuilder;
 
 public class PersistenceLayer {
 	
@@ -49,16 +53,37 @@ public class PersistenceLayer {
 		return false;
 	}
 	
+	// gets hashed and salted password string
+	private String saltAndHash(String uname, String pword) {
+		try{
+			MessageDigest md = MessageDigest.getInstance("SHA-256");
+			String passWithSalt = pword + uname;
+			byte[] passBytes = passWithSalt.getBytes();
+			byte[] passHash = md.digest(passBytes);
+			StringBuilder sb = new StringBuilder();
+			for(int i = 0; i < passHash.length; i++) {
+				sb.append(Integer.toString((passHash[i] & 0xff) + 0x100, 16).substring(1)); 
+			}
+			String result = sb.toString();
+			System.out.println(result);
+			return result;
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 	// adds new user after registration
 	public void addUser(String fname, String lname, String uname, String pword) {
 		PreparedStatement statement = null;
 		String query = "INSERT INTO User (first_name, last_name, username, password, num_recipes) VALUES (?, ?, ?, ?, 0)";
+		String hashedPass = saltAndHash(uname, pword);
 		try {
 			statement = connection.prepareStatement(query);
 			statement.setString(1, fname);
 			statement.setString(2, lname);
 			statement.setString(3, uname);
-			statement.setString(4, pword);
+			statement.setString(4, hashedPass);
 			database.insert(connection, statement);
 		} catch(SQLException e) {
 			e.printStackTrace();
@@ -69,6 +94,7 @@ public class PersistenceLayer {
 	public boolean checkPassword(String uname, String pword) {
 		PreparedStatement statement = null;
 		String query = "SELECT password FROM User WHERE username = ?";
+		String hashedPass = saltAndHash(uname, pword);
 		try {
 			statement = connection.prepareStatement(query);
 			statement.setString(1, uname);
@@ -77,7 +103,7 @@ public class PersistenceLayer {
 			while(rs.next()) {
 				password = rs.getString(1);
 			}
-			if(pword.equals(password)) return true;
+			if(hashedPass.equals(password)) return true;
 			else return false;
 		} catch(SQLException e) {
 			e.printStackTrace();

@@ -4,10 +4,10 @@ VALUES  ("Appetizer"),
         ("Dessert");
  
 INSERT INTO User (first_name, last_name, username, password, num_recipes)
-VALUES  ("Blake", "Cleary", "bcleary", "password", 3),
-        ("Patric", "Chang", "pchang", "password", 3),
-        ("Akshay", "Jagtap", "ajagtap", "password", 3),
-        ("Kyle", "Martin", "kmartin", "password", 3); 
+VALUES  ("Blake", "Cleary", "bcleary", "251470d8cc267f672265230767ee177f04dca9ca4db273fb7561214fff32d617", 3),
+        ("Patric", "Chang", "pchang", "36f7a1bbce5886e706937136f3ecbbf47b2a080ea69efb2bfafed02d9edf0854", 3),
+        ("Akshay", "Jagtap", "ajagtap", "d683cc637a5292395fd40afb36cf3a5c7b9c455832aae0077aa4e1999c956d4f", 3),
+        ("Kyle", "Martin", "kmartin", "4ac986cf6f2071f6795e7606f4fc49feaca4a3f6c39a9bf57346d4ef557548af", 3); 
  
 INSERT INTO Recipe (recipe_name, recipe_description, vote_sum, num_votes, user_id, category_id)
 VALUES  ("PEPPER POPPERS RECIPE","These creamy stuffed jalapenos have some bite. They may be the most popular treats I make! My               husband is always hinting that I should make a batch.", 4, 4, 1, 1),
